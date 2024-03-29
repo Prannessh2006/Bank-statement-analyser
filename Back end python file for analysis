@@ -1,0 +1,102 @@
+import pandas as pd
+from tabula import read_pdf
+import subprocess
+import sys
+import matplotlib.pyplot as plt
+
+def install_module(module_name):
+    try:
+        __import__(module_name)
+    except ImportError:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", module_name])
+
+def convert_to_dataframe(file_path):
+    """
+    Converting tables from PDF or CSV file into pandas DataFrame.
+    """
+    #
+    install_module("tabula-py")
+
+
+    file_extension = file_path.split('.')[-1].lower()
+
+    # Read the file and extract tables
+    if file_extension == 'pdf':
+        try:
+            tables = read_pdf(file_path, pages='all', multiple_tables=True)
+        except Exception as e:
+            print("Error:", e)
+            return None
+    elif file_extension == 'csv':
+        try:
+            tables = pd.read_csv(file_path, header=None, encoding='utf-8')
+        except Exception as e:
+            print("Error:", e)
+            return None
+    else:
+        print("Unsupported file format. Please provide a PDF or CSV file.")
+        return None
+
+    # Convert each table to DataFrame
+    data_frames = []
+    for table in tables:
+        if isinstance(table, pd.DataFrame):
+            data_frames.append(table)
+
+    if not data_frames:
+        print("No tables found in the file.")
+        return None
+
+    # Return DataFrame if only one table found
+    if len(data_frames) == 1:
+        return data_frames[0]
+    else:
+        return data_frames
+
+# Example usage:
+file_path = input("Enter the file path: ")
+data = convert_to_dataframe(file_path)
+if data is not None:
+    if isinstance(data, pd.DataFrame):
+        print("DataFrame:")
+        data = data.dropna(axis='rows')
+        print(data)
+        k = data.to_dict()
+        print(k)
+    elif isinstance(data, list):
+        print("Multiple DataFrames found:")
+        for i, df in enumerate(data):
+            print(f"DataFrame {i + 1}:")
+
+            print(df)
+new_dict=dict()
+a=1
+for i in k.keys():
+    for j in k[i]:
+        new_dict[a]=k[i][j]
+        a+=1
+original_one=dict()
+l=[]
+n=1
+a=1
+while(n<=24):
+    original_one[a]=[new_dict[n],new_dict[n+1],new_dict[n+2],new_dict[n+3]]
+    a+=1;
+    n+=4;
+print(original_one)
+l = pd.DataFrame(original_one)
+plt.bar(l[1],l[3])
+plt.title()
+plt.xlabel()
+plt.ylabel()
+plt.show()
+
+
+
+
+
+
+
+
+
+
