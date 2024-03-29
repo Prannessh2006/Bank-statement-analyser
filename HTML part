@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Uploader</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <header>
+    <h1 style="font-size: 36px; font-weight: bold; line-height: 1.5;">Welcome to the BANK STATEMENT ANALYSER (by CyberPunks)</h1>
+    <p style="font-size: 18px; font-weight: bold;">Select your BANK STATEMENT file to upload</p>
+</header>
+
+        </header>
+        <div class="upload-form">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <label for="pdfFile" class="file-label">Select PDF File</label>
+                <input type="file" name="pdfFile" id="pdfFile" accept=".pdf">
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+        <div id="message"></div>
+        <footer>
+            <p>&copy; 2024 PDF Uploader. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="scr
+    ipt.js"></script>
+</body>
+</html>
